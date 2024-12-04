@@ -1,6 +1,4 @@
-# User Registration Endpoint Documentation
-
-## Endpoint: `POST /user/register`
+## Endpoint: `POST /users/register`
 
 ### Description
 This endpoint allows users to register by providing their full name, email address, and password. It validates the input data, hashes the password, and stores the user's information in the database. A unique JWT token is returned upon successful registration.
@@ -10,7 +8,7 @@ This endpoint allows users to register by providing their full name, email addre
 ### Request Format
 
 #### URL
-`/user/register`
+`/users/register`
 
 #### HTTP Method
 `POST`
@@ -34,7 +32,7 @@ The request body must be sent as JSON with the following structure:
     - `email` (string): users email address (must be valid email).
     - `password` (string): users password address (minimum 6 characters).
 
-## Endpoint: `POST /user/login`
+## Endpoint: `POST /users/login`
 
 ### Description
 This endpoint allows existing users to log in by providing their email address and password. Upon successful login, a unique JWT token and user data are returned.
@@ -44,7 +42,7 @@ This endpoint allows existing users to log in by providing their email address a
 ### Request Format
 
 #### URL
-`/user/login`
+`/users/login`
 
 #### HTTP Method
 `POST`
@@ -65,7 +63,7 @@ The request body must be sent as JSON with the following structure:
     - `email` (string): users email address (must be valid email).
     - `password` (string): users password address (minimum 6 characters).
 
-## Endpoint: `POST /user/logout`
+## Endpoint: `POST /users/logout`
 
 ### Description
 This endpoint allows users to log out by invalidating their JWT token. It ensures that the user session is securely terminated.
@@ -75,7 +73,7 @@ This endpoint allows users to log out by invalidating their JWT token. It ensure
 ### Request Format
 
 #### URL
-`/user/logout`
+`/users/logout`
 
 #### HTTP Method
 `GET`
@@ -90,7 +88,7 @@ No body is required for this request.
 
 - `message` (string): logged out.
 
-## Endpoint: `GET /user/profile`
+## Endpoint: `GET /users/profile`
 
 ### Description
 This endpoint allows users to retrieve their profile information. It requires a valid JWT token for authentication.
@@ -100,7 +98,7 @@ This endpoint allows users to retrieve their profile information. It requires a 
 ### Request Format
 
 #### URL
-`/user/profile`
+`/users/profile`
 
 #### HTTP Method
 `GET`
@@ -120,3 +118,47 @@ No body is required for this request.
     - `email` (string): users email address.
     - `createdAt` (string): account creation timestamp.
     - `updatedAt` (string): last update timestamp.
+
+## Endpoint: `POST /captains/register`
+
+### Description
+This endpoint allows captains to register by providing their full name, email address, password, and vehicle details. It validates the input data, hashes the password, and stores the captain's information in the database. A unique JWT token is returned upon successful registration.
+
+---
+
+### Request Format
+
+#### URL
+`/captains/register`
+
+#### HTTP Method
+`POST`
+
+#### Body
+The request body must be sent as JSON with the following structure:
+
+- `fullname` (object)
+    - `firstname` (string, required): Captain's first name (minimum 3 characters).
+    - `lastname` (string, optional): Captain's last name (minimum 3 characters).
+- `email` (string, required): Captain's email address (must be valid email).
+- `password` (string, required): Captain's password (minimum 6 characters).
+- `vehicle` (object)
+    - `color` (string, required): Vehicle color (minimum 3 characters).
+    - `plate` (string, required): Vehicle plate number (minimum 3 characters).
+    - `capacity` (number, required): Vehicle capacity (minimum value 1).
+    - `vehicleType` (string, required): Vehicle type (must be one of: `car`, `motorcycle`, `auto`).
+
+#### Example Request Body
+
+- `token` (string)
+-`captain`
+    - `fullname` (object)
+        - `firstname` (string, required): Captain's first name (minimum 3 characters).
+        - `lastname` (string, optional): Captain's last name (minimum 3 characters).
+    - `email` (string, required): Captain's email address (must be valid email).
+    - `password` (string, required): Captain's password (minimum 6 characters).
+    - `vehicle` (object)
+        - `color` (string, required): Vehicle color (minimum 3 characters).
+        - `plate` (string, required): Vehicle plate number (minimum 3 characters).
+        - `capacity` (number, required): Vehicle capacity (minimum value 1).
+        - `vehicleType` (string, required): Vehicle type (must be one of: `car`, `motorcycle`, `auto`).
