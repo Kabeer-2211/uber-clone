@@ -162,6 +162,42 @@ The request body must be sent as JSON with the following structure:
         - `capacity` (number, required): Vehicle capacity (minimum value 1).
         - `vehicleType` (string, required): Vehicle type (must be one of: `car`, `motorcycle`, `auto`).
 
+## Endpoint: `POST /captains/login`
+
+### Description
+This endpoint allows existing captains to log in by providing their email address and password. Upon successful login, a unique JWT token and user data are returned.
+
+---
+
+### Request Format
+
+#### URL
+`/captains/login`
+
+#### HTTP Method
+`POST`
+
+#### Body
+The request body must be sent as JSON with the following structure:
+
+- `email` (string, required): captains email address (must be valid email).
+- `password` (string), required: captains password address (minimum 6 characters).
+
+#### Example Response
+
+- `token` (string): jwt token
+- `captain` (object):
+    - `fullname` (object)
+        - `firstname` (string, required): Captain's first name (minimum 3 characters).
+        - `lastname` (string, optional): Captain's last name (minimum 3 characters).
+    - `email` (string, required): Captain's email address (must be valid email).
+    - `password` (string, required): Captain's password (minimum 6 characters).
+    - `vehicle` (object)
+        - `color` (string, required): Vehicle color (minimum 3 characters).
+        - `plate` (string, required): Vehicle plate number (minimum 3 characters).
+        - `capacity` (number, required): Vehicle capacity (minimum value 1).
+        - `vehicleType` (string, required): Vehicle type (must be one of: `car`, `motorcycle`, `auto`).
+
 ## Endpoint: `GET /captains/logout`
 
 ### Description
