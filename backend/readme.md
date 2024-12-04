@@ -15,9 +15,6 @@ This endpoint allows users to register by providing their full name, email addre
 #### HTTP Method
 `POST`
 
-#### Headers
-`Content-Type: application/json`
-
 #### Body
 The request body must be sent as JSON with the following structure:
 
@@ -52,9 +49,6 @@ This endpoint allows existing users to log in by providing their email address a
 #### HTTP Method
 `POST`
 
-#### Headers
-`Content-Type: application/json`
-
 #### Body
 The request body must be sent as JSON with the following structure:
 
@@ -70,3 +64,59 @@ The request body must be sent as JSON with the following structure:
         - `lastname` (string): users last name (minimum 3 characters).
     - `email` (string): users email address (must be valid email).
     - `password` (string): users password address (minimum 6 characters).
+
+## Endpoint: `POST /user/logout`
+
+### Description
+This endpoint allows users to log out by invalidating their JWT token. It ensures that the user session is securely terminated.
+
+---
+
+### Request Format
+
+#### URL
+`/user/logout`
+
+#### HTTP Method
+`GET`
+
+#### Headers
+`Authorization: Bearer <token>`
+
+#### Body
+No body is required for this request.
+
+#### Example Response
+
+- `message` (string): logged out.
+
+## Endpoint: `GET /user/profile`
+
+### Description
+This endpoint allows users to retrieve their profile information. It requires a valid JWT token for authentication.
+
+---
+
+### Request Format
+
+#### URL
+`/user/profile`
+
+#### HTTP Method
+`GET`
+
+#### Headers
+`Authorization: Bearer <token>`
+
+#### Body
+No body is required for this request.
+
+#### Example Response
+
+- `user` (object):
+    - `fullname` (object)
+        - `firstname` (string): users first name.
+        - `lastname` (string): users last name.
+    - `email` (string): users email address.
+    - `createdAt` (string): account creation timestamp.
+    - `updatedAt` (string): last update timestamp.

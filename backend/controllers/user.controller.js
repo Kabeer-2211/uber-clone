@@ -1,4 +1,5 @@
-const userModel = require('../models/user.model');
+const userModel = require('./../models/user.model');
+const blacklistTokenModel = require('./../models/blacklistToken.model');
 const { createUser } = require('./../services/user.service');
 const { validationResult } = require('express-validator')
 
@@ -16,11 +17,9 @@ async function registerUser(req, res) {
         const token = user.generateAuthToken();
         return res.status(201).json({ token, user });
     } catch (err) {
-        console.log(err);
-        return res.status(500).json({ message: 'Internal server error' });
+        return res.status(401).json({ message: "User already exist" });
     }
 }
-
 async function loginUser(req, res) {
     try {
         const errors = validationResult(req);
@@ -40,9 +39,20 @@ async function loginUser(req, res) {
 
         res.status(200).json({ token, user });
     } catch (err) {
-        console.log(err);
+        return res.status(401).json({ message: "invalid credentials" });
+    }
+}
+async function getUserProfile(req, res) {
+    try {
+        return res.status(200).json(req.user);
+    } catch (err) {
         return res.status(500).json({ message: 'Internal server error' });
     }
 }
+async function logoutUser(req, res) {
+    const token = req.headers.authorization?.split(' ')[1];
+    await blacklistTokenModel.create({ token });
+    res.status(200).json({ message: 'logged out' });
+}
 
-module.exports = { registerUser, loginUser };
+module.exports = { registerUser, loginUser, getUserProfile, logoutUser };
