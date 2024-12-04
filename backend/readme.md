@@ -63,7 +63,7 @@ The request body must be sent as JSON with the following structure:
     - `email` (string): users email address (must be valid email).
     - `password` (string): users password address (minimum 6 characters).
 
-## Endpoint: `POST /users/logout`
+## Endpoint: `GET /users/logout`
 
 ### Description
 This endpoint allows users to log out by invalidating their JWT token. It ensures that the user session is securely terminated.
@@ -111,13 +111,12 @@ No body is required for this request.
 
 #### Example Response
 
-- `user` (object):
-    - `fullname` (object)
-        - `firstname` (string): users first name.
-        - `lastname` (string): users last name.
-    - `email` (string): users email address.
-    - `createdAt` (string): account creation timestamp.
-    - `updatedAt` (string): last update timestamp.
+- `fullname` (object)
+    - `firstname` (string): users first name.
+    - `lastname` (string): users last name.
+- `email` (string): users email address.
+- `createdAt` (string): account creation timestamp.
+- `updatedAt` (string): last update timestamp.
 
 ## Endpoint: `POST /captains/register`
 
@@ -162,3 +161,62 @@ The request body must be sent as JSON with the following structure:
         - `plate` (string, required): Vehicle plate number (minimum 3 characters).
         - `capacity` (number, required): Vehicle capacity (minimum value 1).
         - `vehicleType` (string, required): Vehicle type (must be one of: `car`, `motorcycle`, `auto`).
+
+## Endpoint: `GET /captains/logout`
+
+### Description
+This endpoint allows captains to log out by invalidating their JWT token. It ensures that the user session is securely terminated.
+
+---
+
+### Request Format
+
+#### URL
+`/captains/logout`
+
+#### HTTP Method
+`GET`
+
+#### Headers
+`Authorization: Bearer <token>`
+
+#### Body
+No body is required for this request.
+
+#### Example Response
+
+- `message` (string): logged out.
+
+## Endpoint: `GET /captains/profile`
+
+### Description
+This endpoint allows captains to retrieve their profile information. It requires a valid JWT token for authentication.
+
+---
+
+### Request Format
+
+#### URL
+`/captains/profile`
+
+#### HTTP Method
+`GET`
+
+#### Headers
+`Authorization: Bearer <token>`
+
+#### Body
+No body is required for this request.
+
+#### Example Response
+
+- `fullname` (object)
+    - `firstname` (string, required): Captain's first name (minimum 3 characters).
+    - `lastname` (string, optional): Captain's last name (minimum 3 characters).
+- `email` (string, required): Captain's email address (must be valid email).
+- `password` (string, required): Captain's password (minimum 6 characters).
+- `vehicle` (object)
+    - `color` (string, required): Vehicle color (minimum 3 characters).
+    - `plate` (string, required): Vehicle plate number (minimum 3 characters).
+    - `capacity` (number, required): Vehicle capacity (minimum value 1).
+    - `vehicleType` (string, required): Vehicle type (must be one of: `car`, `motorcycle`, `auto`).
