@@ -1,8 +1,12 @@
-import React from 'react'
+import React from 'react';
+import Router from './router';
+import UserContextProvider from './context/UserProvider';
 
 const App = () => {
   return (
-    <div className=''></div>
+    <UserContextProvider>
+      <Router />
+    </UserContextProvider>
   )
 }
 
