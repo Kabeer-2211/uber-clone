@@ -7,7 +7,7 @@ async function registerCaptain(req, res) {
     try {
         const errors = validationResult(req);
         if (!errors.isEmpty()) {
-            return res.status(400).json({ errors: errors.array() });
+            return res.status(400).json({ message: errors.array()[0].msg });
         }
         const { fullname, email, password, vehicle } = req.body;
         const isCaptainAlreadyExist = await captainModel.findOne({ email });
@@ -35,7 +35,7 @@ async function loginCaptain(req, res) {
     try {
         const errors = validationResult(req);
         if (!errors.isEmpty()) {
-            return res.status(400).json({ errors: errors.array() });
+            return res.status(400).json({ message: errors.array()[0].msg });
         }
         const { email, password } = req.body;
         const captain = await captainModel.findOne({ email }).select('+password');

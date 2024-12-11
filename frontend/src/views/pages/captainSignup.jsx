@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 
 const CaptainSignup = () => {
   const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('second');
+  const [password, setPassword] = useState('');
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
   const [userData, setUserData] = useState({});

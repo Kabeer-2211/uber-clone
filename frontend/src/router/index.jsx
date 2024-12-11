@@ -1,19 +1,43 @@
 import React from 'react';
 import { Routes, Route } from 'react-router-dom';
+import Start from '../views/pages/start';
 import Home from '../views/pages/home';
 import UserLogin from '../views/pages/userLogin';
 import UserSignup from '../views/pages/userSignup';
 import CaptainLogin from '../views/pages/captainLogin';
 import CaptainSignup from '../views/pages/captainSignup';
+import PublicRoute from './PublicRoute';
+import PrivateRoute from './PrivateRoute';
 
 const Router = () => {
     return (
         <Routes>
-            <Route path='/' element={<Home />} />
-            <Route path='/login' element={<UserLogin />} />
-            <Route path='/signup' element={<UserSignup />} />
-            <Route path='/captain-login' element={<CaptainLogin />} />
-            <Route path='/captain-signup' element={<CaptainSignup />} />
+            <Route path='/' element={<Start />} />
+            <Route path='/home' element={
+                <PrivateRoute>
+                    <Home />
+                </PrivateRoute>
+            } />
+            <Route path='/login' element={
+                <PublicRoute>
+                    <UserLogin />
+                </PublicRoute>
+            } />
+            <Route path='/signup' element={
+                <PublicRoute>
+                    <UserSignup />
+                </PublicRoute>
+            } />
+            <Route path='/captain-login' element={
+                <PublicRoute>
+                    <CaptainLogin />
+                </PublicRoute>
+            } />
+            <Route path='/captain-signup' element={
+                <PublicRoute>
+                    <CaptainSignup />
+                </PublicRoute>
+            } />
         </Routes>
     )
 }

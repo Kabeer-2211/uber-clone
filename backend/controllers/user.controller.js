@@ -7,7 +7,7 @@ async function registerUser(req, res) {
     try {
         const errors = validationResult(req);
         if (!errors.isEmpty()) {
-            return res.status(400).json({ errors: errors.array() });
+            return res.status(400).json({ message: errors.array()[0].msg });
         }
         const { fullname, email, password } = req.body;
         const hashedPassword = await userModel.hashPassword(password);
@@ -24,7 +24,7 @@ async function loginUser(req, res) {
     try {
         const errors = validationResult(req);
         if (!errors.isEmpty()) {
-            return res.status(400).json({ errors: errors.array() });
+            return res.status(400).json({ message: errors.array()[0].msg });
         }
         const { email, password } = req.body;
         const user = await userModel.findOne({ email }).select('+password');

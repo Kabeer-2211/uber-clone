@@ -1,16 +1,18 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+import useSession from '../../hooks/useSession';
 
 const UserLogin = () => {
+  const { loginUser } = useSession();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [userData, setUserData] = useState({});
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    setUserData({
+    const userData = {
       email,
       password,
-    });
+    };
+    await loginUser(userData);
     setEmail('');
     setPassword('');
   }
