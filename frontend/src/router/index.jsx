@@ -2,12 +2,14 @@ import React from 'react';
 import { Routes, Route } from 'react-router-dom';
 import Start from '../views/pages/start';
 import Home from '../views/pages/home';
+import CaptainHome from '../views/pages/captainHome';
 import UserLogin from '../views/pages/userLogin';
 import UserSignup from '../views/pages/userSignup';
 import CaptainLogin from '../views/pages/captainLogin';
 import CaptainSignup from '../views/pages/captainSignup';
 import PublicRoute from './PublicRoute';
 import PrivateRoute from './PrivateRoute';
+import PrivateCaptainRoute from './PrivateCaptainRoute';
 
 const Router = () => {
     return (
@@ -17,6 +19,11 @@ const Router = () => {
                 <PrivateRoute>
                     <Home />
                 </PrivateRoute>
+            } />
+            <Route path='/captain-home' element={
+                <PrivateCaptainRoute>
+                    <CaptainHome />
+                </PrivateCaptainRoute>
             } />
             <Route path='/login' element={
                 <PublicRoute>

@@ -1,16 +1,18 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+import useSession from '../../hooks/useSession';
 
 const CaptainLogin = () => {
+  const { loginCaptain } = useSession();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [captainData, setCaptainData] = useState({});
   const handleSubmit = (e) => {
     e.preventDefault();
-    setCaptainData({
+    const captainData = {
       email,
       password,
-    });
+    };
+    loginCaptain(captainData);
     setEmail('');
     setPassword('');
   }

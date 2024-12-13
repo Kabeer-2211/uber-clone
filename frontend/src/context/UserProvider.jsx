@@ -1,7 +1,8 @@
 import { createContext, useState, useEffect } from 'react';
-import { signup, login } from '../services/user';
+import { signup, login, logout } from '../services/user';
+import { signup as captainSignup, login as captainLogin, logout as captainLogout } from '../services/captain';
 import { getToken, setToken, deleteToken } from '../utils/user';
-import { logout } from '../services/user';
+import { getCaptain, setCaptain, deleteCaptain } from '../utils/captain';
 import { useNavigate, useLocation } from 'react-router-dom';
 import axios from '../utils/axios';
 import useAxiosInterceptor from '../hooks/useAxiosInterceptor';
@@ -13,6 +14,8 @@ const UserContextProvider = ({ children }) => {
     useInterceptor();
     const [user, setUser] = useState();
     const [isLoadingUserData, setIsLoadingUserData] = useState(false);
+    const checkCaptain = getCaptain() == 'true' ? true : false;
+    const [isCaptain, setIsCaptain] = useState(checkCaptain);
     const navigate = useNavigate();
     const { pathname } = useLocation();
     const token = getToken();
@@ -21,6 +24,7 @@ const UserContextProvider = ({ children }) => {
         if (!token) {
             deleteToken();
             setUser(undefined);
+            setIsCaptain(false);
         }
     }, [navigate, pathname, token]);
     useEffect(() => {
@@ -28,7 +32,7 @@ const UserContextProvider = ({ children }) => {
         async function getUserdata() {
             try {
                 setIsLoadingUserData(true);
-                const response = await axios.get("/users/profile");
+                const response = await axios.get(`/${isCaptain ? 'captains' : 'users'}/profile`);
                 if (response) {
                     setUser(response);
                 }
@@ -42,6 +46,16 @@ const UserContextProvider = ({ children }) => {
             getUserdata();
         }
     }, []);
+    useEffect(() => {
+        if (token != null) {
+            if (isCaptain) {
+                setCaptain(true);
+            } else {
+                setCaptain(false);
+            }
+        }
+    }, [isCaptain]);
+
     const signupUser = async (data) => {
         try {
             setIsLoadingUserData(true);
@@ -73,16 +87,50 @@ const UserContextProvider = ({ children }) => {
             setIsLoadingUserData(false);
         }
     };
-    const logoutUser = async () => {
+    const signupCaptain = async (data) => {
         try {
-            const response = await logout();
+            setIsLoadingUserData(true);
+            const response = await captainSignup(data);
+            if (response) {
+                setUser(response.user);
+                setToken(response.token);
+                setIsCaptain(true);
+                window.location.href = '/captain-home';
+            }
+        } catch (err) {
+            console.log(err);
+        } finally {
+            setIsLoadingUserData(false);
+        }
+    };
+    const loginCaptain = async (data) => {
+        try {
+            setIsLoadingUserData(true);
+            const response = await captainLogin(data);
+            if (response) {
+                setUser(response.user);
+                setToken(response.token);
+                setIsCaptain(true);
+                window.location.href = '/captain-home';
+            }
+        } catch (err) {
+            console.log(err);
+        } finally {
+            setIsLoadingUserData(false);
+        }
+    };
+    const logout = async () => {
+        try {
+            const response = await isCaptain ? logout() : captainLogout();
             if (response) {
                 setUser(undefined);
                 deleteToken();
-                window.location.href = '/login';
+                deleteCaptain();
+                setIsCaptain(false);
+                window.location.href = isCaptain ? '/captain-login' : '/login';
             }
         } catch (err) {
-            console.log(err)
+            console.log(err);
         }
     };
 
@@ -93,7 +141,10 @@ const UserContextProvider = ({ children }) => {
             isLoadingUserData,
             signupUser,
             loginUser,
-            logoutUser,
+            logout,
+            signupCaptain,
+            loginCaptain,
+            isCaptain,
         }}>
             {children}
         </UserContext.Provider>
