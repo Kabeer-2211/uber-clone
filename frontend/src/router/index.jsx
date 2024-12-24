@@ -10,14 +10,25 @@ import CaptainSignup from '../views/pages/captainSignup';
 import PublicRoute from './PublicRoute';
 import PrivateRoute from './PrivateRoute';
 import PrivateCaptainRoute from './PrivateCaptainRoute';
+import Riding from '../views/pages/riding';
+import CaptainRiding from '../views/pages/captainRiding';
 
 const Router = () => {
     return (
         <Routes>
-            <Route path='/' element={<Start />} />
+            <Route path='/' element={
+                <PublicRoute>
+                    <Start />
+                </PublicRoute>
+            } />
             <Route path='/home' element={
                 <PrivateRoute>
                     <Home />
+                </PrivateRoute>
+            } />
+            <Route path='/riding' element={
+                <PrivateRoute>
+                    <Riding />
                 </PrivateRoute>
             } />
             <Route path='/captain-home' element={
@@ -44,6 +55,11 @@ const Router = () => {
                 <PublicRoute>
                     <CaptainSignup />
                 </PublicRoute>
+            } />
+            <Route path='/captain-riding' element={
+                <PrivateCaptainRoute>
+                    <CaptainRiding />
+                </PrivateCaptainRoute>
             } />
         </Routes>
     )

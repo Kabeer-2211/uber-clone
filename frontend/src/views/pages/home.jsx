@@ -117,7 +117,7 @@ const Home = () => {
       <VehiclePanel setConfirmRidePanel={setConfirmRidePanel} vehiclePanelRef={vehiclePanelRef} vehiclePanelRefClose={vehiclePanelRefClose} setVehiclePanelOpen={setVehiclePanelOpen} />
       <ConfirmedRide setVehicleFound={setVehicleFound} ridePanelRef={ridePanelRef} setConfirmRidePanel={setConfirmRidePanel} />
       <LookingForDriver setVehicleFound={setVehicleFound} vehicleFoundRef={vehicleFoundRef} />
-      <WaitingForDriver waitingForDriverRef={waitingForDriverRef} setWaitingForDriver={setWaitingForDriver} />
+      <WaitingForDriver waitingForDriverRef={waitingForDriverRef} />
     </div>
   )
 }

@@ -1,5 +1,5 @@
 import { createContext, useState, useEffect } from 'react';
-import { signup, login, logout } from '../services/user';
+import { signup, login, logout as userLogout } from '../services/user';
 import { signup as captainSignup, login as captainLogin, logout as captainLogout } from '../services/captain';
 import { getToken, setToken, deleteToken } from '../utils/user';
 import { getCaptain, setCaptain, deleteCaptain } from '../utils/captain';
@@ -121,13 +121,14 @@ const UserContextProvider = ({ children }) => {
     };
     const logout = async () => {
         try {
-            const response = await isCaptain ? logout() : captainLogout();
+            const response = await isCaptain ? userLogout() : captainLogout();
             if (response) {
+                const logoutUrl = isCaptain ? 'captain-login' : 'login';
                 setUser(undefined);
                 deleteToken();
                 deleteCaptain();
                 setIsCaptain(false);
-                window.location.href = isCaptain ? '/captain-login' : '/login';
+                window.location.href = logoutUrl;
             }
         } catch (err) {
             console.log(err);
