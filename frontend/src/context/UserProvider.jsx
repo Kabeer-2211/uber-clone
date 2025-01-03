@@ -121,7 +121,7 @@ const UserContextProvider = ({ children }) => {
     };
     const logout = async () => {
         try {
-            const response = await isCaptain ? userLogout() : captainLogout();
+            const response = await isCaptain ? captainLogout() : userLogout();
             if (response) {
                 const logoutUrl = isCaptain ? 'captain-login' : 'login';
                 setUser(undefined);
